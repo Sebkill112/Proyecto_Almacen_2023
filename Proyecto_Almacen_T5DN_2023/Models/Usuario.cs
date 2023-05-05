@@ -2,11 +2,12 @@
 {
     public class Usuario
     {
+        public int idUsuario { get; set; }
+        public string nombre { get; set; }
+        public string correo { get; set; }
+        public string clave { get; set; }
         public int idRol { get; set; }
-        public string? Nombre { get; set; }
-        public string? Correo { get; set; }
-        public string? Clave { get; set; }
-        public string? rol { get; set; }
+        public string des_Rol { get; set; }
         
     }
 }

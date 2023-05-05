@@ -1,0 +1,51 @@
+﻿@model Proyecto_Almacen_T5DN_2023.Models.Usuario;
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+	 <link rel="stylesheet" href="~/css/index.css" asp-append-version="true" />
+    <!-- Los iconos tipo Solid de Fontawesome-->
+    <link rel="stylesheet"
+          href="https://use.fontawesome.com/releases/v5.0.8/css/solid.css">
+    <script src="https://use.fontawesome.com/releases/v5.0.7/js/all.js"></script>
+    <title>LOGIN</title>
+</head>
+<body>
+    <div class="modal-dialog text-center">
+		<div class="col-sm-8 main-section">
+		<div class="modal-content">
+		   <div class="col-12 user-img">
+		     <img  src="~/imagenes/images.png">
+		   </div>		
+				<form asp-controller="Usuario" asp-action="Index" class="col-12 mt-2" method="post">
+		     <div class="form-group" id="user-group">
+		     <input type="email" class="form-control mt-3" placeholder="Correo de Usuario"  asp-for="correo"  >
+		     
+		     </div>
+		     
+		     <div class="form-group" id="password-group">
+						<input type="password" class="form-control mt-3" placeholder="Contraseña" asp-for="clave">
+		     
+		     </div>
+		     
+		     <button type="submit" class="btn btn-primary mt-2 mb-2"><i class="fas fa-sign-in-alt"></i>  Ingresar</button>
+		   
+		   </form>
+		   
+		
+		</div>
+		
+		</div>
+	</div>
+
+
+ <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
