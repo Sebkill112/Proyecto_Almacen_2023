@@ -18,6 +18,8 @@ namespace Proyecto_Almacen_T5DN_2023.Controllers
 
         public IActionResult Index()
         {
+
+
             return View();
         }
 

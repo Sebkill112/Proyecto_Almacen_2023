@@ -4,14 +4,14 @@ using Proyecto_Almacen_T5DN_2023.Models;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication;
 using System.Security.Claims;
-
-
+using Microsoft.AspNetCore.Authorization;
 
 namespace Proyecto_Almacen_T5DN_2023.Controllers
 {
     public class UsuarioController : Controller
     {
 
+        
 
         public IActionResult Index()
         {
@@ -20,6 +20,7 @@ namespace Proyecto_Almacen_T5DN_2023.Controllers
         }
 
 
+        [Authorize]
         public IActionResult Listado()
         {
             DA_Usuario dao = new DA_Usuario();
@@ -58,6 +59,7 @@ namespace Proyecto_Almacen_T5DN_2023.Controllers
             }
             else
             {
+                ViewData["MENSAJE"] = "Usuario Incorrecto";
                 return View();
             }
 

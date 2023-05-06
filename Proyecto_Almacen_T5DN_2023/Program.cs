@@ -1,5 +1,5 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
-
+using Microsoft.AspNetCore.Mvc;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,6 +15,18 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
     }
    
     ) ;
+
+
+builder.Services.AddControllersWithViews(options =>
+{
+    options.Filters.Add(
+         new ResponseCacheAttribute
+         {
+       NoStore= true,
+       Location = ResponseCacheLocation.None,
+         }
+        );
+});
 
 var app = builder.Build();
 

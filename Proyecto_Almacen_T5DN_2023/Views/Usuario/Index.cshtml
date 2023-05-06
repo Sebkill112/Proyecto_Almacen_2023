@@ -37,6 +37,22 @@
 		     
 		     <button type="submit" class="btn btn-primary mt-2 mb-2"><i class="fas fa-sign-in-alt"></i>  Ingresar</button>
 		   
+			 @if(ViewData["MENSAJE"] != null){
+						
+				 <div class="form-group"> 
+					<div class="alert alert-danger" role="alert">
+						@ViewData["MENSAJE"]
+
+					</div>				 
+				 </div>
+			 }
+
+			 <div class="form-group">
+						<strong><p style="color:black">¿No tienes una cuenta?</p></strong><a href="@Url.Action("","")">Registrate</a>
+
+			 </div>
+			 
+
 		   </form>
 		   
 		
