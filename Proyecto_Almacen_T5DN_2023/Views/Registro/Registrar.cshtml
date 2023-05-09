@@ -1,0 +1,71 @@
+﻿@model Proyecto_Almacen_T5DN_2023.Models.RUsuario
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/index.css" asp-append-version="true" />
+    <!-- Los iconos tipo Solid de Fontawesome-->
+    <link rel="stylesheet"
+          href="https://use.fontawesome.com/releases/v5.0.8/css/solid.css">
+    <script src="https://use.fontawesome.com/releases/v5.0.7/js/all.js"></script>
+    <title>Registro</title>
+</head>
+<body>
+    <div class="modal-dialog text-center">
+        <div class="col-sm-8 main-section">
+            <div class="modal-content">
+
+                <form asp-controller="Registro" asp-action="Registrar" class="col-12 mt-2" method="post">
+
+                    <div class="form-group" id="user-group">
+                        <input type="text" class="form-control mt-3" placeholder="Escriba su Nombre" asp-for="nombre">
+                    </div>
+
+                    <div class="form-group" id="user-group">
+                        <input type="email" class="form-control mt-3" placeholder="Correo de Usuario" asp-for="correo">
+                    </div>
+
+
+                    <div class="form-group" id="password-group">
+                        <input type="password" class="form-control mt-3" placeholder="Contraseña" asp-for="clave">
+                    </div>
+
+                    <div class="form-group">
+                        <input type="hidden" class="form-control mt-3" value="3" asp-for="idRol">
+                    </div>
+
+
+
+                    <button type="submit" class="btn btn-success mt-2 mb-2"><i class="fas fa-sign-in-alt"></i>  Crear Cuenta</button>
+
+                    <br />
+                   
+
+                    <div class="form-group">
+                        <a asp-action="Index" asp-controller="Usuario" class="btn btn-primary">Retornar al Login</a>
+                    </div>
+
+                    <br />
+                    
+
+
+
+                </form>
+
+
+            </div>
+
+        </div>
+    </div>
+
+
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
