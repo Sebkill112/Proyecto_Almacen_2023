@@ -36,24 +36,25 @@ namespace Proyecto_Almacen_T5DN_2023.Controllers
         public IActionResult Registrar(RUsuario usuario)
         {
             
-            {
                 using (SqlConnection con = new(Configuration["ConnectionStrings:cnDB"]))
                 {
+                    
+                        using (SqlCommand cmd = new("SP_NUEVOUSUARIO", con))
+                        {
+                            cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                            cmd.Parameters.Add("@nom", System.Data.SqlDbType.VarChar).Value = usuario.nombre;
+                            cmd.Parameters.Add("@correo", System.Data.SqlDbType.VarChar).Value = usuario.correo;
+                            cmd.Parameters.Add("@clave", System.Data.SqlDbType.VarChar).Value = usuario.clave;
+                            cmd.Parameters.Add("@rol", System.Data.SqlDbType.Int).Value = usuario.idRol;
+                            con.Open();
+                            cmd.ExecuteNonQuery();
+                            con.Close();
+                           
+                        }
 
-                    using (SqlCommand cmd = new("SP_NUEVOUSUARIO", con))
-                    {
-                        cmd.CommandType = System.Data.CommandType.StoredProcedure;
-                        cmd.Parameters.Add("@nom", System.Data.SqlDbType.VarChar).Value = usuario.nombre;
-                        cmd.Parameters.Add("@correo", System.Data.SqlDbType.VarChar).Value = usuario.correo;
-                        cmd.Parameters.Add("@clave", System.Data.SqlDbType.VarChar).Value = usuario.clave;
-                        cmd.Parameters.Add("@rol", System.Data.SqlDbType.Int).Value = usuario.idRol;
-                        con.Open();
-                        cmd.ExecuteNonQuery();
-                        con.Close();
-                    }
-                }
-                
-                return Redirect("Usuario/Index");
+                ViewData["MENSAJE"] = "Usuario ya registrado";
+
+                return RedirectToAction("Index", "Usuario") ;
 
             }
            
