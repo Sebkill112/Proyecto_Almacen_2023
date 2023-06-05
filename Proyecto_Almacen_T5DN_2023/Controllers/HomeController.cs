@@ -30,7 +30,7 @@ namespace Proyecto_Almacen_T5DN_2023.Controllers
         [Authorize(Roles = "Administrador,Proveedor")]
         public IActionResult Ingreso()
         {
-            return View();
+            return RedirectToAction("Ingreso","Ingreso");
         }
         [Authorize(Roles = "Administrador,Asistente")]
         public IActionResult Egreso()

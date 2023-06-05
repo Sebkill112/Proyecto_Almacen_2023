@@ -6,7 +6,6 @@
         public string idProveedor { get; set; }
         public DateTime fechaIngreso { get; set; }
         public decimal total { get; set; }
-        public string Destino { get; set; }
 
         public List<DetalleIngreso> lstdetalleIngreso { get; set; }
 

@@ -1,0 +1,130 @@
+﻿@model IEnumerable<Proyecto_Almacen_T5DN_2023.Models.IngresoItem>
+
+@{
+    ViewData["Title"] = "DetalleIngreso";
+}
+
+<h1>Detalle del Ingreso</h1>
+
+<p>
+    <a asp-action="Portal" asp-controller="Ingreso" class="btn btn-primary">Seguir Agregando</a>
+</p>
+<hr />
+
+<h3>Proveedor</h3>
+<input type="text" name="pro" class="form-control" id="txtProveedor"/>
+<h3>Fecha de Ingreso</h3>
+<input type="text" name="ven" class="form-control" value="@ViewBag.fecha" id="txtFecha" />
+
+<table class="table" id="tbDetalle">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.idProducto)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.nombreProducto)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.cantidad)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.precio)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.monto)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            double total = 0;
+        }
+@foreach (var item in Model) {
+            total += (double)(item.cantidad * item.precio);
+
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.idProducto)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.nombreProducto)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.cantidad)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.precio)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.monto)
+            </td>
+            <td>
+                @Html.ActionLink("delete", "delete", new { id=item.idProducto  })
+            </td>
+        </tr>
+}
+    </tbody>
+    <tfoot>
+        <tr></tr>
+        <tr>
+            <th colspan="10">Total</th>
+            <th>@string.Format("{0:C}", total)</th>
+        </tr>
+    </tfoot>
+</table>
+<hr />
+<br />
+<div>
+    <input type="button" value="FINALIZAR INGRESO" class="btn btn-success" id="btn-finalizar"/>
+</div>
+
+@section Scripts
+		{
+        
+            <script>
+
+                $("#btn-finalizar").on("click",function(){
+                    var detalle = [];
+                    var total = 0;
+
+                    $("#tbDetalle > tbody > tr").each(function(index,tr){
+                        detalle.push(
+                            {
+                        idProducto: parseInt($(tr).find("td:eq(0)").text()),
+                                   cantidad:parseInt($(tr).find("td:eq(2)").text()),
+                                    precioUnitario: parseFloat($(tr).find("td:eq(3)").text()),
+                                    subtotal: parseFloat($(tr).find("td:eq(4)").text()),
+
+                        }
+                        )
+                total = total + parseFloat($(tr).find("td:eq(4)").text())
+                    })
+
+                    var ingreso = {
+                     idProveedor: $("#txtProveedor").val(),
+                fechaIngreso: $("#txtFecha").val(),
+                    total:total,
+                    lstdetalleIngreso : detalle
+                
+                    }
+
+                    console.log(ingreso);
+
+                    $.ajax({
+                      url: "@Url.Action("GuardarIngreso","Ingreso")",
+                      type: "POST",
+                     data: JSON.stringify(ingreso),
+                     dataType: "json",
+                     contentType: "application/json; charset=utf-8",
+                     success:function(data){
+                    console.log(data)
+                }
+                    })
+
+                })
+
+            </script>
+        
+        }
