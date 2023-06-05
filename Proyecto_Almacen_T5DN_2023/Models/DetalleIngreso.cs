@@ -8,5 +8,6 @@
         public int cantidad { get; set; }   
 
         public decimal precioUnitario { get; set; }
+        public decimal subtotal { get; set; }
     }
 }
