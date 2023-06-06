@@ -3,7 +3,7 @@
     public class Ingreso
     {
         public int idIngreso { get; set; }
-        public string idProveedor { get; set; }
+        public string idProveedor { get; set; } 
         public DateTime fechaIngreso { get; set; }
         public decimal total { get; set; }
 

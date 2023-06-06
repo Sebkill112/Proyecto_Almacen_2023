@@ -4,27 +4,28 @@ using Proyecto_Almacen_T5DN_2023.Models;
 using Microsoft.AspNetCore.Session;
 using Newtonsoft.Json;
 using System.Xml.Linq;
-
+using Microsoft.Data.SqlClient;
+using System.Data;
 
 namespace Proyecto_Almacen_T5DN_2023.Controllers
 {
     public class IngresoController : Controller
     {
-        private readonly IConfiguration _configuration; 
-        
+        private readonly string cadenaSql;
+
         public IngresoController(IConfiguration configuration)
         {
-            _configuration = configuration;
+            cadenaSql = configuration.GetConnectionString("cnDB");
         }
 
         public DA_Ingreso dao = new DA_Ingreso();
 
-       Producto buscar(int id = 0)
+        Producto buscar(int id = 0)
         {
             Producto reg = dao.ListarProductosIngreso().Where(p => p.idProducto == id).FirstOrDefault();
-            if(reg == null)
+            if (reg == null)
                 reg = new Producto();
-            
+
             return reg;
         }
 
@@ -62,12 +63,12 @@ namespace Proyecto_Almacen_T5DN_2023.Controllers
 
 
 
-        [HttpPost] 
-        public JsonResult Agregar(int codigo,int cantidad,decimal pre)
+        [HttpPost]
+        public JsonResult Agregar(int codigo, int cantidad, decimal pre)
         {
 
             Producto reg = buscar(codigo);
-            
+
             IngresoItem it = new IngresoItem();
             it.idProducto = codigo;
             it.nombreProducto = reg.nombreProducto;
@@ -75,7 +76,7 @@ namespace Proyecto_Almacen_T5DN_2023.Controllers
             it.cantidad = cantidad;
             int posicion = indice(codigo);
             List<IngresoItem> carrito = JsonConvert.DeserializeObject<List<IngresoItem>>(HttpContext.Session.GetString("Canasta"));
-            if(posicion == -1)
+            if (posicion == -1)
             {
                 carrito.Add(it);
             }
@@ -83,8 +84,8 @@ namespace Proyecto_Almacen_T5DN_2023.Controllers
             {
                 ViewData["mensaje"] = "Producto ya existe";
             }
-            
-            HttpContext.Session.SetString("Canasta",JsonConvert.SerializeObject(carrito));
+
+            HttpContext.Session.SetString("Canasta", JsonConvert.SerializeObject(carrito));
             return Json(reg);
         }
 
@@ -103,7 +104,7 @@ namespace Proyecto_Almacen_T5DN_2023.Controllers
                 JsonConvert.DeserializeObject<List<IngresoItem>>(HttpContext.Session.GetString("Canasta"));
             return View(carrito);
 
-           
+
 
         }
 
@@ -123,31 +124,49 @@ namespace Proyecto_Almacen_T5DN_2023.Controllers
         }
 
         [HttpPost]
-        public JsonResult GuardarIngreso([FromBody] Ingreso ingreso)
+        public JsonResult GuardarIngreso(string dato)
         {
-            XElement Ingreso = new XElement("Ingreso",
-                
-                new XElement("idProveedor", ingreso.idProveedor),
-                new XElement("fechaIngreso", ingreso.fechaIngreso),
-                new XElement("total", ingreso.total)
-                );
 
-            XElement oIngresoDetalle = new XElement("DetalleIngreso");
+            Ingreso i = new Ingreso();
 
-            foreach(DetalleIngreso item in ingreso.lstdetalleIngreso)
+            i = JsonConvert.DeserializeObject<Ingreso>(dato);
+
+            XElement ingreso = new XElement("Ingreso",
+
+                 new XElement("idProveedor", i.idProveedor),
+                 new XElement("fechaIngreso", i.fechaIngreso),
+                 new XElement("total", i.total)
+                 );
+
+            XElement oDetalleIngreso = new XElement("DetalleIngreso");
+
+            foreach (DetalleIngreso item in i.lstdetalleIngreso)
             {
-                oIngresoDetalle.Add(new XElement("Item",
-                    new XElement("idProducto",item.idProducto),
-                    new XElement("Precio",item.precioUnitario),
-                    new XElement("Cantidad",item.cantidad),
-                    new XElement("Subtotal",item.subtotal)
-                    
+                oDetalleIngreso.Add(new XElement("Item",
+                    new XElement("idProducto", item.idProducto),
+                    new XElement("Precio", item.precioUnitario),
+                    new XElement("Cantidad", item.cantidad),
+                    new XElement("Subtotal", item.subtotal)
+
                     ));
             }
-            Ingreso.Add(oIngresoDetalle);
+            ingreso.Add(oDetalleIngreso);
 
-            return Json(true);
+            using (SqlConnection conexion = new SqlConnection(cadenaSql))
+            {
+                conexion.Open();
+                SqlCommand cmd = new SqlCommand("sp_guardarIngreso", conexion);
+                cmd.Parameters.Add("@ingreso_xml", SqlDbType.Xml).Value = ingreso.ToString();
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                cmd.ExecuteNonQuery();
+
+                return Json(true);
+            }
+
         }
+
+      
 
     }
 }

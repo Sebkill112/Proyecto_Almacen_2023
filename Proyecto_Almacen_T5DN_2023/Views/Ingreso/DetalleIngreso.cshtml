@@ -86,11 +86,12 @@
             <script>
 
                 $("#btn-finalizar").on("click",function(){
-                    var detalle = [];
-                    var total = 0;
+                   let DetalleIngreso = [];
+                    let total = 0;
+                    let dato = "";
 
                     $("#tbDetalle > tbody > tr").each(function(index,tr){
-                        detalle.push(
+                      DetalleIngreso.push(
                             {
                         idProducto: parseInt($(tr).find("td:eq(0)").text()),
                                    cantidad:parseInt($(tr).find("td:eq(2)").text()),
@@ -102,26 +103,31 @@
                 total = total + parseFloat($(tr).find("td:eq(4)").text())
                     })
 
-                    var ingreso = {
+                    var Ingreso = {
                      idProveedor: $("#txtProveedor").val(),
-                fechaIngreso: $("#txtFecha").val(),
-                    total:total,
-                    lstdetalleIngreso : detalle
+                     fechaIngreso: $("#txtFecha").val(),
+                     total:total,
+                lstdetalleIngreso: DetalleIngreso
                 
                     }
 
-                    console.log(ingreso);
+                    dato = JSON.stringify(Ingreso);
 
-                    $.ajax({
-                      url: "@Url.Action("GuardarIngreso","Ingreso")",
-                      type: "POST",
-                     data: JSON.stringify(ingreso),
-                     dataType: "json",
-                     contentType: "application/json; charset=utf-8",
-                     success:function(data){
-                    console.log(data)
+                    console.log(dato);
+
+            jQuery.ajax({
+                url: '@Url.Action("GuardarIngreso", "Ingreso")',
+                type: "POST",
+                data: {dato : dato},
+                dataType: "json",
+                success: function (data) {
+                    
+                    if(data.respuesta){
+                        alert("Ingreso Registrado")
+                    }
+
                 }
-                    })
+            });
 
                 })
 

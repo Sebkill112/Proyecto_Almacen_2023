@@ -9,5 +9,8 @@
 
         public decimal precioUnitario { get; set; }
         public decimal subtotal { get; set; }
+
+        public Ingreso ingreso { get; set; }
+        public Producto producto { get; set; }
     }
 }
