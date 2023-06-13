@@ -1,0 +1,142 @@
+﻿@model IEnumerable<Proyecto_Almacen_T5DN_2023.Models.IngresoItem>
+
+@{
+    ViewData["Title"] = "DetalleEgreso";
+}
+
+<h1>DetalleEgreso</h1>
+
+<p>
+    <a asp-action="Portal" asp-controller="Egreso" class="btn btn-primary">Seguir Agregando</a>
+</p>
+<hr />
+
+<h3>Cliente</h3>
+<input type="text" name="cli" class="form-control" id="txtCliente" />
+<h3>Fecha de Ingreso</h3>
+<input type="text" name="ven" class="form-control" value="@ViewBag.fecha" id="txtFecha" />
+<h3>Destino</h3>
+<input type="text" name="ven" class="form-control" id="txtDestino" />
+<table class="table" id="tbDetalle">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.idProducto)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.nombreProducto)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.cantidad)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.precio)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.monto)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            double total = 0;
+        }
+        @foreach (var item in Model)
+        {
+            total += (double)(item.cantidad * item.precio);
+
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.idProducto)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.nombreProducto)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.cantidad)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.precio)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.monto)
+                </td>
+                <td>
+                    @Html.ActionLink("delete", "delete", new { id=item.idProducto  })
+                </td>
+            </tr>
+}
+    </tbody>
+
+    <tfoot>
+        <tr></tr>
+        <tr>
+            <th colspan="10">Total</th>
+            <th>@string.Format("{0:C}", total)</th>
+        </tr>
+    </tfoot>
+</table>
+
+<hr />
+<br />
+<div>
+    <input type="button" value="FINALIZAR EGRESO" class="btn btn-success" id="btn-finalizar" />
+</div>
+
+@section Scripts
+    {
+
+    <script>
+
+        $("#btn-finalizar").on("click", function () {
+            let DetalleEgreso = [];
+            let total = 0;
+            let dato = "";
+
+            $("#tbDetalle > tbody > tr").each(function (index, tr) {
+                DetalleEgreso.push(
+                    {
+                        idProducto: parseInt($(tr).find("td:eq(0)").text()),
+                        cantidad: parseInt($(tr).find("td:eq(2)").text()),
+                        precioUnitario: parseFloat($(tr).find("td:eq(3)").text()),
+                        subtotal: parseFloat($(tr).find("td:eq(4)").text()),
+
+                    }
+                )
+                total = total + parseFloat($(tr).find("td:eq(4)").text())
+            })
+
+            var Egreso = {
+                idCliente: $("#txtCliente").val(),
+                fechaEgreso: $("#txtFecha").val(),
+                total: total,
+                destino: $("#txtDestino").val(),
+                lstDetalleEgreso: DetalleEgreso
+
+            }
+
+            dato = JSON.stringify(Egreso);
+
+            console.log(dato);
+
+            jQuery.ajax({
+                url: '@Url.Action("GuardarEgreso", "Egreso")',
+                type: "POST",
+                data: { dato: dato },
+                dataType: "json",
+                success: function (data) {
+
+                    if (data.respuesta) {
+                        alert("Egreso Registrado")
+                        window.location.href = '@Url.Action("Portal", "Egreso")'
+                    }
+
+                }
+            });
+
+        })
+
+    </script>
+
+        }

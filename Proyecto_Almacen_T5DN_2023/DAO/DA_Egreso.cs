@@ -1,15 +1,14 @@
-﻿using Proyecto_Almacen_T5DN_2023.Models;
-using System.Data.SqlClient;
+﻿using Microsoft.Data.SqlClient;
+using Proyecto_Almacen_T5DN_2023.Models;
 
 namespace Proyecto_Almacen_T5DN_2023.DAO
 {
-    public class DA_Ingreso
+    public class DA_Egreso
     {
 
         public string cnn = "";
 
-
-        public DA_Ingreso()
+        public DA_Egreso()
         {
             var builder = new ConfigurationBuilder().SetBasePath(
                 Directory.GetCurrentDirectory()).AddJsonFile("appSettings.json").Build();
@@ -17,13 +16,13 @@ namespace Proyecto_Almacen_T5DN_2023.DAO
             cnn = builder.GetSection("ConnectionStrings:cnDB").Value;
         }
 
-        public List<Producto> ListarProductosIngreso()
+        public List<Producto> ListarProductosEgreso()
         {
 
 
             SqlConnection cn = new SqlConnection(cnn);
             List<Producto> lista = new List<Producto>();
-            SqlCommand cmd = new SqlCommand("ListarProductosIngreso", cn);
+            SqlCommand cmd = new SqlCommand("ListarProductosEgreso", cn);
             cn.Open();
             SqlDataReader reader = cmd.ExecuteReader();
             while (reader.Read())
@@ -31,17 +30,15 @@ namespace Proyecto_Almacen_T5DN_2023.DAO
                 lista.Add(new Producto
                 {
                     idProducto = reader.GetInt32(0),
-                    nombreProducto = reader.GetString(1)
-  
+                    nombreProducto = reader.GetString(1),
+                    precio = reader.GetDecimal(2)
+
                 });
             }
 
             cn.Close();
             return lista;
         }
-
- 
-
 
     }
 }
