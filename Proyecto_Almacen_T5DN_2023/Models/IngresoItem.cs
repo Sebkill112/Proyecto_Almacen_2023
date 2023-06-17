@@ -6,7 +6,7 @@
         public string nombreProducto { get; set; }
         public int cantidad { get; set; }
         public decimal precio { get; set; }
-        public decimal monto { get {return precio* cantidad; } }
+        public decimal monto { get { return precio * cantidad; } }
 
 
     }
