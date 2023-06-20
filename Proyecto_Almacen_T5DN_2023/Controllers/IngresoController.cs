@@ -160,11 +160,45 @@ namespace Proyecto_Almacen_T5DN_2023.Controllers
                 cmd.CommandType = CommandType.StoredProcedure;
 
                 cmd.ExecuteNonQuery();
+                List<IngresoItem> carrito =
+               JsonConvert.DeserializeObject<List<IngresoItem>>(HttpContext.Session.GetString("Canasta"));
 
-                return Json(true);
+                carrito = new List<IngresoItem>();
+
+                HttpContext.Session.SetString("Canasta", JsonConvert.SerializeObject(carrito));
+
+
+                return Json(new { respuesta = true });
+
+                
             }
 
         }
+        [HttpPost]
+        public JsonResult Editar(string dato)
+        {
+            IngresoItem i = new IngresoItem();
+
+            i = JsonConvert.DeserializeObject<IngresoItem>(dato);
+
+            List<IngresoItem> carrito =
+               JsonConvert.DeserializeObject<List<IngresoItem>>(HttpContext.Session.GetString("Canasta"));
+        
+        IngresoItem resultado = carrito.FirstOrDefault(p => p.idProducto == i.idProducto);
+            if(resultado != null)
+            {
+                resultado.precio = i.precio;
+                resultado.cantidad = i.cantidad;
+
+            }
+
+            HttpContext.Session.SetString("Canasta", JsonConvert.SerializeObject(carrito)
+               );
+
+            return Json(new { respuesta = true });
+
+        }
+
 
       
 

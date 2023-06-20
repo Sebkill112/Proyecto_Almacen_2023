@@ -36,7 +36,7 @@
                         }
                         @if (User.IsInRole("Administrador") || User.IsInRole("Proveedor")) { 
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Ingreso">Ingreso</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Ingreso" asp-action="Portal">Ingreso</a>
                             </li>
                         }
                         @if (User.IsInRole("Administrador") || User.IsInRole("Asistente")) { 
