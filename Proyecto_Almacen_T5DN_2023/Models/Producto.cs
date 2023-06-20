@@ -8,7 +8,5 @@
         public int stock { get; set; }
         public decimal precio { get; set; }
         public int idCat { get; set; }
-
-
     }
 }
