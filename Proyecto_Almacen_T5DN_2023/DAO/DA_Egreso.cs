@@ -31,7 +31,31 @@ namespace Proyecto_Almacen_T5DN_2023.DAO
                 {
                     idProducto = reader.GetInt32(0),
                     nombreProducto = reader.GetString(1),
-                    precio = reader.GetDecimal(2)
+                    precio = reader.GetDecimal(2),
+                    stock = reader.GetInt32(3)
+
+                });
+            }
+
+            cn.Close();
+            return lista;
+        }
+
+        public List<Cliente> ListarClientes()
+        {
+
+
+            SqlConnection cn = new SqlConnection(cnn);
+            List<Cliente> lista = new List<Cliente>();
+            SqlCommand cmd = new SqlCommand("sp_listarclientes", cn);
+            cn.Open();
+            SqlDataReader reader = cmd.ExecuteReader();
+            while (reader.Read())
+            {
+                lista.Add(new Cliente
+                {
+                    idCliente = reader.GetString(0),
+                    nombreCompañia = reader.GetString(1)
 
                 });
             }

@@ -17,6 +17,7 @@ namespace Proyecto_Almacen_T5DN_2023.DAO
             cnn = builder.GetSection("ConnectionStrings:cnDB").Value;
         }
 
+
         public List<Producto> ListarProductosIngreso()
         {
 

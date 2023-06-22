@@ -12,9 +12,9 @@
 <hr />
 
 <h3>Cliente</h3>
-<input type="text" name="cli" class="form-control" id="txtCliente" />
+<select asp-items="@ViewBag.cliente" class="form-control" id="cbo_cliente"></select>
 <h3>Fecha de Ingreso</h3>
-<input type="text" name="ven" class="form-control" value="@ViewBag.fecha" id="txtFecha" />
+<input type="text" name="ven" class="form-control" value="@ViewBag.fecha" id="txtFecha" readonly />
 <h3>Destino</h3>
 <input type="text" name="ven" class="form-control" id="txtDestino" />
 <table class="table" id="tbDetalle">
@@ -133,7 +133,7 @@
             })
 
             var Egreso = {
-                idCliente: $("#txtCliente").val(),
+                idCliente: $("#cbo_cliente").val(),
                 fechaEgreso: $("#txtFecha").val(),
                 total: total,
                 destino: $("#txtDestino").val(),

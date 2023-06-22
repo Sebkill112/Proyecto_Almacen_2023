@@ -21,6 +21,9 @@
             <th>
                 Cantidad
             </th>
+            <th>
+                Stock Disponible
+            </th>
             <th></th>
         </tr>
     </thead>
@@ -39,6 +42,9 @@
                 </td>
                 <td>
                     <input type="number" class="form-control" min="0" />
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.stock)
                 </td>
                 <td>
                     <input type="button" class="btn btn-primary agregar" value="AGREGAR">
