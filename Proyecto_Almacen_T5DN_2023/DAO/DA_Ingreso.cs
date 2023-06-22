@@ -17,6 +17,7 @@ namespace Proyecto_Almacen_T5DN_2023.DAO
             cnn = builder.GetSection("ConnectionStrings:cnDB").Value;
         }
 
+
         public List<Producto> ListarProductosIngreso()
         {
 
@@ -40,31 +41,7 @@ namespace Proyecto_Almacen_T5DN_2023.DAO
             return lista;
         }
 
-        public Producto BuscarProductosIngreso(string cod)
-        {
-
-
-            SqlConnection cn = new SqlConnection(cnn);
-             Producto prod = new Producto();
-            SqlCommand cmd = new SqlCommand("sp_buscarProducto", cn);
-            cmd.Parameters.AddWithValue("@cod", cod);
-            cmd.CommandType = System.Data.CommandType.StoredProcedure;
-            cn.Open();
-            SqlDataReader reader = cmd.ExecuteReader();
-            while (reader.Read())
-            {
-                prod.idProducto = reader.GetInt32(0);
-                prod.nombreProducto = reader.GetString(1);
-                prod.idProveedor = reader.GetString(2);
-                prod.stock = reader.GetInt32(3);
-                prod.precio = reader.GetDecimal(4);
-                prod.idCat = reader.GetInt32(5);
-
-            }
-            cn.Close();
-            return prod;
-        }
-
+ 
 
 
     }

@@ -6,6 +6,8 @@ using Newtonsoft.Json;
 using System.Xml.Linq;
 using Microsoft.Data.SqlClient;
 using System.Data;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Proyecto_Almacen_T5DN_2023.Controllers
 {
@@ -20,6 +22,45 @@ namespace Proyecto_Almacen_T5DN_2023.Controllers
 
         public DA_Ingreso dao = new DA_Ingreso();
 
+        public string data()
+        {
+
+            ClaimsPrincipal claimUser = HttpContext.User;
+            string nombreUsuario = "";
+            if (claimUser.Identity.IsAuthenticated)
+            {
+                nombreUsuario = claimUser.Claims.Where(c => c.Type == ClaimTypes.Name)
+                    .Select(c=> c.Value).SingleOrDefault();
+            }
+            return nombreUsuario;
+        }
+
+        public List<Proveedor> ListaProveedorPorCorreo()
+        {
+
+
+            SqlConnection cn = new SqlConnection(cadenaSql);
+            List<Proveedor> lista = new List<Proveedor>();
+            SqlCommand cmd = new SqlCommand("sp_datos_proveedor", cn);
+            cmd.Parameters.AddWithValue("@correo", data());
+            cmd.CommandType = System.Data.CommandType.StoredProcedure;
+            cn.Open();
+            SqlDataReader reader = cmd.ExecuteReader();
+            while (reader.Read())
+            {
+                lista.Add(new Proveedor
+                {
+                    idProveedor = reader.GetString(0),
+                    nombreProveedor = reader.GetString(1)
+
+                });
+            }
+
+            cn.Close();
+            return lista;
+        }
+
+      
         Producto buscar(int id = 0)
         {
             Producto reg = dao.ListarProductosIngreso().Where(p => p.idProducto == id).FirstOrDefault();
@@ -97,7 +138,8 @@ namespace Proyecto_Almacen_T5DN_2023.Controllers
 
         public ActionResult DetalleIngreso()
         {
-            ViewBag.fecha = DateTime.Now;
+            ViewBag.proveedor = new SelectList(ListaProveedorPorCorreo(), "idProveedor", "nombreProveedor");
+            ViewBag.fecha = DateTime.Now.ToString("yyyy-MM-dd");
             if (HttpContext.Session.GetString("Canasta") == null) return RedirectToAction("Portal");
 
             IEnumerable<IngresoItem> carrito =
@@ -174,6 +216,31 @@ namespace Proyecto_Almacen_T5DN_2023.Controllers
             }
 
         }
+        [HttpPost]
+        public JsonResult Editar(string dato)
+        {
+            IngresoItem i = new IngresoItem();
+
+            i = JsonConvert.DeserializeObject<IngresoItem>(dato);
+
+            List<IngresoItem> carrito =
+               JsonConvert.DeserializeObject<List<IngresoItem>>(HttpContext.Session.GetString("Canasta"));
+        
+        IngresoItem resultado = carrito.FirstOrDefault(p => p.idProducto == i.idProducto);
+            if(resultado != null)
+            {
+                resultado.precio = i.precio;
+                resultado.cantidad = i.cantidad;
+
+            }
+
+            HttpContext.Session.SetString("Canasta", JsonConvert.SerializeObject(carrito)
+               );
+
+            return Json(new { respuesta = true });
+
+        }
+
 
       
 

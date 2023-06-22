@@ -1,0 +1,152 @@
+﻿@model Proyecto_Almacen_T5DN_2023.Models.Cliente
+
+@{
+    ViewData["Title"] = "Ubigeo";
+}
+
+<h1 class="text-center">NUEVO CLIENTE</h1>
+<br />
+<hr />
+
+
+
+<div class="row">
+<div class="col-md-4">
+        <div class="card">
+    <div class="card-header bg-primary text-white text-center">
+                <h3>Registro Cliente</h3>
+    </div>
+    <div class="card-body bg-light">
+        @*<h5 class="card-title"> Crear un Nuevo Cliente</h5>*@
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>  
+            <div class="form-group">
+                
+                <label asp-for="idCliente" class="control-label"></label>
+                <input asp-for="idCliente" class="form-control" />
+                <span asp-validation-for="idCliente" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="RUC" class="control-label"></label>
+                        <input asp-for="RUC" class="form-control" />
+                <span asp-validation-for="RUC" class="text-danger"></span>
+            </div>
+                    
+            <div class="form-group">
+                <label asp-for="nombreCompañia" class="control-label"></label>
+                        <input asp-for="nombreCompañia" class="form-control" />
+                <span asp-validation-for="nombreCompañia" class="text-danger"></span>
+            </div>
+                    
+            <div class="form-group">
+                <label asp-for="direccion" class="control-label"></label>
+                <input asp-for="direccion" class="form-control" />
+                <span asp-validation-for="direccion" class="text-danger"></span>
+            </div>
+                    
+            <div class="form-group">
+                <label asp-for="telefono" class="control-label"></label>
+                <input asp-for="telefono" class="form-control" />
+                <span asp-validation-for="telefono" class="text-danger"></span>
+            </div>
+                    
+            <div class="form-group">
+                <label asp-for="idDepartamento" class="control-label"></label>
+                @*<input asp-for="idDepartamento" class="form-control" />*@
+                <select asp-for="idDepartamento" asp-items="@ViewBag.departamentos" class="form-control" id="depa"></select>
+                <span asp-validation-for="idDepartamento" class="text-danger"></span>
+            </div>
+                   
+            <div class="form-group">
+                <label asp-for="idProvincia" class="control-label"></label>
+                @*<input asp-for="idProvincia" class="form-control" />*@
+                <select asp-for="idProvincia" class="form-control" id="prov"></select>
+                <span asp-validation-for="idProvincia" class="text-danger"></span>
+            </div>
+                 
+            <div class="form-group">
+                <label asp-for="idDistrito" class="control-label"></label>
+                @*<input asp-for="idDistrito" class="form-control" />*@
+                <select asp-for="idDistrito" class="form-control" id="dist"></select>
+                <span asp-validation-for="idDistrito" class="text-danger"></span>
+            </div>
+                    <div class="form-group">
+                        <label asp-for="estado" class="control-label"></label>
+                        <input asp-for="estado" value="activo" class="form-control" />
+                        <span asp-validation-for="estado" class="text-danger"></span>
+                    </div>
+            
+            
+
+            <br />
+            
+            <div class="form-group text-center">
+                <input type="submit" value="Registrar" class="btn btn-primary" />
+                        <a asp-action="Index" asp-controller="Cliente" class="btn btn-outline-primary">Retornar a la lista</a>
+            </div>
+        </form>
+    </div>
+</div>
+</div>
+   
+</div>
+
+
+<br />
+
+<div class="alert alert-primary col-md-4 text-center" role="alert">
+    <div>@ViewBag.mensaje</div>
+</div>
+<br />
+
+
+@*<div>
+    <a asp-action="Index">Back to List</a>
+</div>*@
+
+
+@section Scripts
+    {
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script>
+
+
+        $(document).on("change", "#depa", function () {
+            let codDepa = $(this).val();
+            $("#prov").empty().append("<option value=' '>" + "[Seleccione Provincia]" + "</option>")
+            $.ajax(
+                {
+                    url: "@Url.Action("Provincia","Ubigeo")",
+                    dataType: "json",
+                    data: { codDepa: codDepa },
+                    type: "GET",
+                    success: function (response) {
+                        $.each(response, function (index, item) {
+                            $("#prov").append("<option value='" + item.codigoProvincia + "'>" + item.nombre + "</option>");
+                        })
+                    }
+
+                })
+        })
+
+        $(document).on("change", "#prov", function () {
+            let codProv = $(this).val();
+            $("#dist").empty().append("<option value=' '>" + "[Seleccione Distrito]" + "</option>")
+            $.ajax(
+                {
+                    url: "@Url.Action("Distrito","Ubigeo")",
+                    dataType: "json",
+                    data: { codProv: codProv },
+                    type: "GET",
+                    success: function (response) {
+                        $.each(response, function (index, item) {
+                            console.log(response);
+                            $("#dist").append("<option value='" + item.codigoDistrito + "'>" + item.nombre + "</option>");
+                        })
+                    }
+
+                })
+        })
+
+    </script>
+    }

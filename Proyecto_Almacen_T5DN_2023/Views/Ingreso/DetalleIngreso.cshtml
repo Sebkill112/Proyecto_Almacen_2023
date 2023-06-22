@@ -12,9 +12,9 @@
 <hr />
 
 <h3>Proveedor</h3>
-<input type="text" name="pro" class="form-control" id="txtProveedor"/>
+<select asp-items="@ViewBag.proveedor" class="form-control" id="cbo_proveedor"></select>
 <h3>Fecha de Ingreso</h3>
-<input type="text" name="ven" class="form-control" value="@ViewBag.fecha" id="txtFecha" />
+<input type="text" name="ven" class="form-control" value="@ViewBag.fecha" id="txtFecha" readonly />
 
 <table class="table" id="tbDetalle">
     <thead>
@@ -34,6 +34,7 @@
             <th>
                 @Html.DisplayNameFor(model => model.monto)
             </th>
+            <th></th>
             <th></th>
         </tr>
     </thead>
@@ -60,6 +61,9 @@
             <td>
                 @Html.DisplayFor(modelItem => item.monto)
             </td>
+                <td>
+                    <input type="button" value="Editar" class="btn btn-warning btn-editar" data-bs-toggle="modal" data-bs-target="#modalEditarCantidad"/>
+                </td>
             <td>
                 @Html.ActionLink("delete", "delete", new { id=item.idProducto  })
             </td>
@@ -79,6 +83,28 @@
 <div>
     <input type="button" value="FINALIZAR INGRESO" class="btn btn-success" id="btn-finalizar"/>
 </div>
+<!-- Modal -->
+<div class="modal fade" id="modalEditarCantidad" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Editar Producto</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                ID Producto : <label id="lbId"></label><br />
+                Nombre : <label id="lbNombre"></label><br />
+                Precio :<input type="text" id="txtPrecioEditar" /><br />
+                Cantidad : <input type="text" id="txtCantidadEditar" /><br />
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal" id="btnAceptarCantidad">Aceptar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 
 @section Scripts
 		{
@@ -104,7 +130,7 @@
                     })
 
                     var Ingreso = {
-                     idProveedor: $("#txtProveedor").val(),
+                idProveedor: $("#cbo_proveedor").val(),
                      fechaIngreso: $("#txtFecha").val(),
                      total:total,
                 lstdetalleIngreso: DetalleIngreso
@@ -131,6 +157,58 @@
             });
 
                 })
+
+                var col_IdProducto
+                var col_nombre;
+                var col_precio;
+                var col_cantidad;
+                var col_monto;
+                $(document).on("click", ".btn-editar", function () {
+                col_IdProducto = $(this).parents("tr").find("td")[0].innerHTML;
+                col_nombre = $(this).parents("tr").find("td")[1].innerHTML;
+                col_precio = $(this).parents("tr").find("td")[3].innerHTML;
+                col_cantidad = $(this).parents("tr").find("td")[2].innerHTML;
+
+                $("#lbId").text(col_IdProducto);
+                $("#lbNombre").text(col_nombre);
+                $("#txtPrecioEditar").val(col_precio.trim());
+                $("#txtCantidadEditar").val(col_cantidad.trim());
+                    });
+
+        $(document).on("click", "#btnAceptarCantidad", function () {
+            let cant,pre;
+            pre = $("#txtPrecioEditar").val();
+            cant = $("#txtCantidadEditar").val();
+
+            var producto = {
+                idProducto: $("#lbId").text().trim(),
+                nombreProducto: $("#lbNombre").text().trim(),
+                cantidad: cant,
+                precio: pre,
+                monto: cant * pre
+            }
+            dato = JSON.stringify(producto);
+        
+            console.log(dato);
+
+            jQuery.ajax({
+                url: '@Url.Action("Editar", "Ingreso")',
+                type: "POST",
+                data: { dato: dato },
+                dataType: "json",
+                success: function (response) {
+
+                    if (response.respuesta) {
+                    window.location.href = '@Url.Action("DetalleIngreso", "Ingreso")'
+                    alert("producto Editado");
+                    }
+                
+
+                }
+            });
+
+                });
+                
 
             </script>
         
