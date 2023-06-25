@@ -56,6 +56,6 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Egreso}/{action=Portal}/{id?}");
+    pattern: "{controller=Usuario}/{action=Index}/{id?}");
 
 app.Run();

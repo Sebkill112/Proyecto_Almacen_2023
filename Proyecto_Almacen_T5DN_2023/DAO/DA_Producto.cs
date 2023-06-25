@@ -38,6 +38,44 @@ namespace Proyecto_Almacen_T5DN_2023.DAO
             return list; 
         }
 
+        public List<Categoria> ListCategory()
+        {
+            SqlConnection cn = new SqlConnection();
+            List<Categoria> list = new List<Categoria>();
+            SqlCommand cmd = new SqlCommand("list_Categoria", cn);
+            cn.Open();
+            SqlDataReader rd = cmd.ExecuteReader();
+            while (rd.Read()) 
+            {
+                list.Add(new Categoria
+                {
+                    idCat = rd.GetInt32(0),
+                    nomCat = rd.GetString(1),
+                });
+            }
+            cn.Close();
+            return list;
+        }
+
+        public List<Proveedor> ListProveedor()
+        {
+            SqlConnection cn = new SqlConnection();
+            List<Proveedor> list = new List<Proveedor>();
+            SqlCommand cmd = new SqlCommand("list_Proveedor", cn);
+            cn.Open();
+            SqlDataReader rd = cmd.ExecuteReader();
+            while (rd.Read())
+            {
+                list.Add(new Proveedor
+                {
+                    idProveedor = rd.GetString(0),
+                    nombreProveedor = rd.GetString(1)
+                });
+            }
+            cn.Close();
+            return list;
+        }
+
 
 
     }
