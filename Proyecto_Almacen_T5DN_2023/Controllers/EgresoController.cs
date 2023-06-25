@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Data.SqlClient;
 using Newtonsoft.Json;
 using Proyecto_Almacen_T5DN_2023.DAO;
@@ -94,7 +95,8 @@ namespace Proyecto_Almacen_T5DN_2023.Controllers
 
         public ActionResult DetalleEgreso()
         {
-            ViewBag.fecha = DateTime.Now;
+            ViewBag.cliente = new SelectList(dao.ListarClientes(), "idCliente", "nombreCompañia");
+            ViewBag.fecha = DateTime.Now.ToString("yyyy-MM-dd");
             if (HttpContext.Session.GetString("Egreso") == null) return RedirectToAction("Portal");
 
             IEnumerable<IngresoItem> carrito =

@@ -44,7 +44,7 @@ namespace Proyecto_Almacen_T5DN_2023.Controllers
 
                 var claims = new List<Claim> {
 
-                new Claim(ClaimTypes.Name,u.nombre),
+                new Claim(ClaimTypes.Name,u.correo),
                 new Claim("Correo",u.correo),
                 new Claim(ClaimTypes.Role, u.des_Rol)
 
@@ -55,7 +55,7 @@ namespace Proyecto_Almacen_T5DN_2023.Controllers
                 await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme,new ClaimsPrincipal(claimsIdentity));
 
 
-                return RedirectToAction("Listado", "Usuario");
+                return RedirectToAction("Index", "Home");
             }
             else
             {

@@ -12,9 +12,9 @@
 <hr />
 
 <h3>Proveedor</h3>
-<input type="text" name="pro" class="form-control" id="txtProveedor"/>
+<select asp-items="@ViewBag.proveedor" class="form-control" id="cbo_proveedor"></select>
 <h3>Fecha de Ingreso</h3>
-<input type="text" name="ven" class="form-control" value="@ViewBag.fecha" id="txtFecha" />
+<input type="text" name="ven" class="form-control" value="@ViewBag.fecha" id="txtFecha" readonly />
 
 <table class="table" id="tbDetalle">
     <thead>
@@ -130,7 +130,7 @@
                     })
 
                     var Ingreso = {
-                     idProveedor: $("#txtProveedor").val(),
+                idProveedor: $("#cbo_proveedor").val(),
                      fechaIngreso: $("#txtFecha").val(),
                      total:total,
                 lstdetalleIngreso: DetalleIngreso

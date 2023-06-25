@@ -1,0 +1,86 @@
+﻿@model IEnumerable<Proyecto_Almacen_T5DN_2023.Models.ClienteVista>
+
+@{
+    ViewData["Title"] = "Clientes";
+}
+<style>
+    a:link, a:visited {
+       
+        text-decoration: none;
+        
+    }
+
+   
+</style>
+
+<h1>CLIENTES</h1>
+
+<p>
+    <a asp-action="Create" asp-controller="Cliente" class="btn btn-success">Nuevo Cliente</a>
+</p>
+<table class="table table-dark table-striped-columns">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.idCliente)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RUC)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.nombreCompañia)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.direccion)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.idDistrito)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.telefono)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.idProvincia)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.idDepartamento)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.idCliente)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RUC)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.nombreCompañia)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.direccion)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.idDistrito)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.telefono)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.idProvincia)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.idDepartamento)
+            </td>
+            <td>
+                    <button class="btn btn-warning">   @Html.ActionLink("Editar", "Edit", new { id=item.idCliente }, new { style = "color: white;"  }) </button>
+                    <button class="btn btn-primary">@Html.ActionLink("Detalles", "Details", new { /* id=item.PrimaryKey */ }, new { style = "color: white;"  }) </button>
+                    <button class="btn btn-danger">@Html.ActionLink("Eliminar", "Delete", new {  id=item.idCliente }, new { style = "color: white;"  }) </button>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
