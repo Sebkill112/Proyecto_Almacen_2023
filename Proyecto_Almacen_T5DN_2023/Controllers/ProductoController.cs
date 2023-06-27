@@ -49,7 +49,7 @@ namespace Proyecto_Almacen_T5DN_2023.Controllers
 
             using (SqlConnection cn = new SqlConnection(cadena_cn))
             {
-                SqlCommand cmd = new SqlCommand("", cn);
+                SqlCommand cmd = new SqlCommand("list_ProductoR", cn);
                 cn.Open();
                 SqlDataReader rd = cmd.ExecuteReader();
                 while (rd.Read())
@@ -73,12 +73,12 @@ namespace Proyecto_Almacen_T5DN_2023.Controllers
         public async Task<IActionResult> Index()
         { 
             return View(await Task.Run(()=> listProduct()));
-        }
+        }  
         // Create 
         public async Task<IActionResult> Registrar()
         {
-            ViewBag.CATEGORIA = new SelectList(await Task.Run(() => dao.ListCategory()), "idCat", "nombreProveedor");
-            ViewBag.PROVEEDOR = new SelectList(await Task.Run(() => dao.ListProveedor()), "idProveedor", "nomCat");
+            ViewBag.CATEGORIA = new SelectList(await Task.Run(() => dao.ListCategory()), "idCat", "nomCat");
+            ViewBag.PROVEEDOR = new SelectList(await Task.Run(() => dao.ListProveedor()), "idProveedor", "nombreProveedor");
             return View(new Producto());
         }
         [HttpPost]
@@ -93,9 +93,14 @@ namespace Proyecto_Almacen_T5DN_2023.Controllers
             {
                 try
                 {
-                    SqlCommand cmd = new SqlCommand("", cn);
+                    SqlCommand cmd = new SqlCommand("dbo.usp_productos_merge ", cn);
                     cmd.CommandType = System.Data.CommandType.StoredProcedure;
-
+                    cmd.Parameters.AddWithValue("@idProducto", regProduct.idProducto);
+                    cmd.Parameters.AddWithValue("@nombreProducto", regProduct.nombreProducto);
+                    cmd.Parameters.AddWithValue("@idProveedor", regProduct.idProveedor);
+                    cmd.Parameters.AddWithValue("@stock", regProduct.stock);
+                    cmd.Parameters.AddWithValue("@precio", regProduct.precio);
+                    cmd.Parameters.AddWithValue("@idCat", regProduct.idCat);
                     cn.Open();
                     int cant = cmd.ExecuteNonQuery();
                     sms = $"Se ha registrado con exito {cant} producto";
@@ -119,8 +124,8 @@ namespace Proyecto_Almacen_T5DN_2023.Controllers
             {
                 return RedirectToAction("Index");
             }
-            ViewBag.CATEGORIA = new SelectList(await Task.Run(() => dao.ListCategory()), "idCat", "nombreProveedor");
-            ViewBag.PROVEEDOR = new SelectList(await Task.Run(() => dao.ListProveedor()), "idProveedor", "nomCat");
+            ViewBag.CATEGORIA = new SelectList(await Task.Run(() => dao.ListCategory()), "idCat", "nomCat");
+            ViewBag.PROVEEDOR = new SelectList(await Task.Run(() => dao.ListProveedor()), "idProveedor", "nombreProveedor");
             return View(regProducto);
         }
 
@@ -136,9 +141,14 @@ namespace Proyecto_Almacen_T5DN_2023.Controllers
             {
                 try
                 {
-                    SqlCommand cmd = new SqlCommand("", cn);
+                    SqlCommand cmd = new SqlCommand("dbo.usp_productos_merge ", cn);
                     cmd.CommandType = System.Data.CommandType.StoredProcedure;
-
+                    cmd.Parameters.AddWithValue("@idProducto", regProducto.idProducto);
+                    cmd.Parameters.AddWithValue("@nombreProducto", regProducto.nombreProducto);
+                    cmd.Parameters.AddWithValue("@idProveedor", regProducto.idProveedor);
+                    cmd.Parameters.AddWithValue("@stock", regProducto.stock);
+                    cmd.Parameters.AddWithValue("@precio", regProducto.precio);
+                    cmd.Parameters.AddWithValue("@idCat", regProducto.idCat);
                     cn.Open();
                     int cant = cmd.ExecuteNonQuery();
                     sms = $"Se ha actualizo con exito {cant} producto";
@@ -172,8 +182,8 @@ namespace Proyecto_Almacen_T5DN_2023.Controllers
             {
                 try
                 {
-                    SqlCommand cmd = new SqlCommand("", cn);
-                    cmd.Parameters.AddWithValue("", delete.idProducto);
+                    SqlCommand cmd = new SqlCommand("usp_Eliminar_Producto", cn);
+                    cmd.Parameters.AddWithValue("@idProducto", delete.idProducto);
                     cmd.CommandType = System.Data.CommandType.StoredProcedure;
                     cn.Open(); 
                     int cant = cmd.ExecuteNonQuery();

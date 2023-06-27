@@ -6,17 +6,17 @@ namespace Proyecto_Almacen_T5DN_2023.DAO
 {
     public class DA_Producto
     {
-        public string cn = "";
+        public string cnn = "";
         public DA_Producto() 
         {
             var builder = new ConfigurationBuilder().SetBasePath(
                 Directory.GetCurrentDirectory()).AddJsonFile("appSettings.json").Build();
 
-            cn = builder.GetSection("ConnectionStrings:cnDB").Value;
+            cnn = builder.GetSection("ConnectionStrings:cnDB").Value;
         }
         public List<Producto> ListProducto()
         {
-            SqlConnection cn = new SqlConnection();
+            SqlConnection cn = new SqlConnection(cnn);
             List<Producto> list =new List<Producto>();
             SqlCommand cmd = new SqlCommand("", cn);
             cn.Open();
@@ -40,7 +40,7 @@ namespace Proyecto_Almacen_T5DN_2023.DAO
 
         public List<Categoria> ListCategory()
         {
-            SqlConnection cn = new SqlConnection();
+            SqlConnection cn = new SqlConnection(cnn);
             List<Categoria> list = new List<Categoria>();
             SqlCommand cmd = new SqlCommand("list_Categoria", cn);
             cn.Open();
@@ -59,7 +59,7 @@ namespace Proyecto_Almacen_T5DN_2023.DAO
 
         public List<Proveedor> ListProveedor()
         {
-            SqlConnection cn = new SqlConnection();
+            SqlConnection cn = new SqlConnection(cnn);
             List<Proveedor> list = new List<Proveedor>();
             SqlCommand cmd = new SqlCommand("list_Proveedor", cn);
             cn.Open();

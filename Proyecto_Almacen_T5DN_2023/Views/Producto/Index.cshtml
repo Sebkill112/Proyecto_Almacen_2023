@@ -7,7 +7,7 @@
 <h1>::: LISTADO DE PRODUCTOS :::</h1>
 
 <p>
-    <a asp-action="Create">Nuevo Producto</a>
+    <a asp-action="Registrar">Nuevo Producto</a>
 </p>
 <table class="table">
     <thead>
@@ -55,9 +55,8 @@
                 @Html.DisplayFor(modelItem => item.nomCat)
             </td>
             <td>
-                @Html.ActionLink("Editar", "Edit", new { id = item.idProducto}) |
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Eliminar", "Delete", new { id = item.idProducto})
+                @Html.ActionLink("Editar", "Editar", new { id = item.idProducto}) |
+                @Html.ActionLink("Eliminar", "Eliminar", new { id = item.idProducto})
             </td>
         </tr>
 }

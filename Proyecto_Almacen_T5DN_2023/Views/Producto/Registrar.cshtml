@@ -1,0 +1,62 @@
+﻿@model Proyecto_Almacen_T5DN_2023.Models.Producto
+
+@{
+    ViewData["Title"] = "Registrar";
+}
+
+<h1>:: REGISTRO DE PRODUCTO ::</h1>
+
+<h4>Ingrese los datos del nuevo producto</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Registrar">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="idProducto" class="control-label"></label>
+                <input asp-for="idProducto" class="form-control" />
+                <span asp-validation-for="idProducto" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="nombreProducto" class="control-label"></label>
+                <input asp-for="nombreProducto" class="form-control" />
+                <span asp-validation-for="nombreProducto" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="idProveedor" class="control-label"></label>
+                @*<input asp-for="idProveedor" class="form-control" />*@
+                <br />
+                @Html.DropDownList("idProveedor", ViewBag.PROVEEDOR as SelectList, "Seleccione un proveedor")
+                <span asp-validation-for="idProveedor" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="stock" class="control-label"></label>
+                <input asp-for="stock" class="form-control" />
+                <span asp-validation-for="stock" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="precio" class="control-label"></label>
+                <input asp-for="precio" class="form-control" />
+                <span asp-validation-for="precio" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="idCat" class="control-label"></label>
+                @*<input asp-for="idCat" class="form-control" />*@
+                <br />
+                @Html.DropDownList("idCat", ViewBag.CATEGORIA as SelectList, "Seleccione una categoria")
+                <span asp-validation-for="idCat" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Volver</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
