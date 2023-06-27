@@ -2,7 +2,7 @@
 
 namespace Proyecto_Almacen_T5DN_2023.Models
 {
-    public class Proveedor
+    public class ProveedorVista
     {
         [Display(Name = "Codigo")]
         public string idProveedor { get; set; } = string.Empty;
@@ -20,20 +20,17 @@ namespace Proyecto_Almacen_T5DN_2023.Models
 
 
         [Display(Name = "Distrito")]
-        public int idDistrito { get; set; }
+        public string idDistrito { get; set; } = string.Empty;
 
         [Display(Name = "Telefono")]
         public string telefono { get; set; } = string.Empty;
 
         [Display(Name = "Provincia")]
-        public int idProvincia { get; set; }
+        public string idProvincia { get; set; } = string.Empty;
+        [Display(Name = "Correo")]
+        public string correo { get; set; } = string.Empty;
 
         [Display(Name = "Departamento")]
-        public int idDepartamento { get; set; }
-        [Display(Name = "Correo")]
-        public string correo { get; set; }
-        [Display(Name = "Estado")]
-        public string estado { get; set; }
-
+        public string idDepartamento { get; set; } = string.Empty;
     }
 }

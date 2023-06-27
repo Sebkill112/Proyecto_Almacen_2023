@@ -70,11 +70,7 @@
                 <select asp-for="idDistrito" class="form-control" id="dist"></select>
                 <span asp-validation-for="idDistrito" class="text-danger"></span>
             </div>
-                    <div class="form-group">
-                        <label asp-for="estado" class="control-label"></label>
-                        <input asp-for="estado" value="activo" class="form-control" />
-                        <span asp-validation-for="estado" class="text-danger"></span>
-                    </div>
+
             
             
 
@@ -109,6 +105,43 @@
     {
     @{ await Html.RenderPartialAsync("_ValidationScriptsPartial");}
     <script>
+
+        $(document).ready(function () {
+            let codDepa = $("#depa").val();
+            $("#prov").empty().append("<option value=' '>" + "[Seleccione Provincia]" + "</option>")
+            $.ajax(
+                {
+                    url: "@Url.Action("Provincia","Ubigeo")",
+                    dataType: "json",
+                    data: { codDepa: codDepa },
+                    type: "GET",
+                    success: function (response) {
+                        $.each(response, function (index, item) {
+                            $("#prov").append("<option value='" + item.codigoProvincia + "'>" + item.nombre + "</option>");
+                        })
+                    }
+
+                })
+        });
+
+        $(document).ready(function () {
+            let codProv = $("#prov").val();
+            $("#dist").empty().append("<option value=' '>" + "[Seleccione Distrito]" + "</option>")
+            $.ajax(
+                {
+                    url: "@Url.Action("Distrito","Ubigeo")",
+                    dataType: "json",
+                    data: { codProv: codProv },
+                    type: "GET",
+                    success: function (response) {
+                        $.each(response, function (index, item) {
+                            console.log(response);
+                            $("#dist").append("<option value='" + item.codigoDistrito + "'>" + item.nombre + "</option>");
+                        })
+                    }
+
+                })
+        });
 
 
         $(document).on("change", "#depa", function () {
