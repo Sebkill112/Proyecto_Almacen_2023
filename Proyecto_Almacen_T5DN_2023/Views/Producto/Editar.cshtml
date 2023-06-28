@@ -4,12 +4,16 @@
     ViewData["Title"] = "Editar";
 }
 
-<h1>::: EDICION :::</h1>
+<h1 class="text-center">EDITAR PRODUCTO</h1>
 
-<h4>Ingreso los datos que desea cambiar</h4>
+<br />
 <hr />
 <div class="row">
     <div class="col-md-4">
+        <div class="card">
+            <div class="card-header bg-warning text-white text-center">
+                <h3>Editar Producto</h3>
+            </div>
         <form asp-action="Editar">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
@@ -26,7 +30,7 @@
                 <label asp-for="idProveedor" class="control-label"></label>
                 @*<input asp-for="idProveedor" class="form-control" />*@
                 <br />
-                @Html.DropDownList("idProveedor", ViewBag.PROVEEDOR as SelectList, "Seleccione un proveedor")
+                    <select asp-for="idProveedor" asp-items="@ViewBag.PROVEEDOR" class="form-control"></select>
                 <span asp-validation-for="idProveedor" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -43,19 +47,27 @@
                 <label asp-for="idCat" class="control-label"></label>
                 @*<input asp-for="idCat" class="form-control" />*@
                 <br />
-                @Html.DropDownList("idCat", ViewBag.CATEGORIA as SelectList, "Seleccione una categoria")
+                    <select asp-for="idCat" asp-items="@ViewBag.CATEGORIA" class="form-control"></select>
                 <span asp-validation-for="idCat" class="text-danger"></span>
             </div>
+                <br />
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+                    <input type="submit" value="Editar" class="btn btn-warning" />
+                    <a asp-action="Index" asp-controller="Producto" class="btn btn-outline-primary">Retornar a la lista</a>
             </div>
         </form>
+        </div>
     </div>
-</div>
+    </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
+
+<br />
+
+<div class="alert alert-warning col-md-4 text-center" role="alert">
+    <div>@ViewBag.mensaje</div>
 </div>
+<br />
+
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

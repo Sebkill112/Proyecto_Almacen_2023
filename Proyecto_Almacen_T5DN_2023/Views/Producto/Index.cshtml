@@ -4,13 +4,13 @@
     ViewData["Title"] = "Producto";
 }
 
-<h1>::: LISTADO DE PRODUCTOS :::</h1>
+<h1 class="text-center">::: LISTADO DE PRODUCTOS :::</h1>
 
 <p>
-    <a asp-action="Registrar">Nuevo Producto</a>
+    <a asp-action="Registrar" class="btn btn-success">Nuevo Producto</a>
 </p>
-<table class="table">
-    <thead>
+<table class="table table-hover">
+    <thead class="table-dark">
         <tr>
             <th>
                 @Html.DisplayNameFor(model => model.idProducto)
@@ -55,8 +55,9 @@
                 @Html.DisplayFor(modelItem => item.nomCat)
             </td>
             <td>
-                @Html.ActionLink("Editar", "Editar", new { id = item.idProducto}) |
-                @Html.ActionLink("Eliminar", "Eliminar", new { id = item.idProducto})
+                    <button class="btn btn-warning">   @Html.ActionLink("Editar", "Editar", new { id=item.idProducto }, new { style = "color: white;"  }) </button>
+                    <button class="btn btn-danger">@Html.ActionLink("Eliminar", "Eliminar", new {  id=item.idProducto }, new { style = "color: white;"  }) </button>
+
             </td>
         </tr>
 }

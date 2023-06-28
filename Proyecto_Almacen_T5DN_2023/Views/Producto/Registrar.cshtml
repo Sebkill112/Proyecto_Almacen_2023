@@ -4,58 +4,78 @@
     ViewData["Title"] = "Registrar";
 }
 
-<h1>:: REGISTRO DE PRODUCTO ::</h1>
 
-<h4>Ingrese los datos del nuevo producto</h4>
+<h1 class="text-center">NUEVO PRODUCTO</h1>
+<br />
 <hr />
+
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Registrar">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="idProducto" class="control-label"></label>
-                <input asp-for="idProducto" class="form-control" />
-                <span asp-validation-for="idProducto" class="text-danger"></span>
+        <div class="card">
+            <div class="card-header bg-primary text-white text-center">
+                <h3>Registro Cliente</h3>
             </div>
-            <div class="form-group">
-                <label asp-for="nombreProducto" class="control-label"></label>
-                <input asp-for="nombreProducto" class="form-control" />
-                <span asp-validation-for="nombreProducto" class="text-danger"></span>
+            <div class="card-body bg-light">
+                @*<h5 class="card-title"> Crear un Nuevo Cliente</h5>*@
+                <form asp-action="Registrar">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group">
+                        <label asp-for="idProducto" class="control-label">Codigo del Producto</label>
+                        <input asp-for="idProducto" value="@ViewBag.INDICE" class="form-control" readonly/>
+                        <span asp-validation-for="idProducto" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="nombreProducto" class="control-label">Nombre del Producto</label>
+                        <input asp-for="nombreProducto" class="form-control" />
+                        <span asp-validation-for="nombreProducto" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="idProveedor" class="control-label">Proveedor</label>
+                        @*<input asp-for="idProveedor" class="form-control" />*@
+                        <br />
+                        <select asp-for="idProveedor" asp-items="@ViewBag.PROVEEDOR" class="form-control"></select>
+                        <span asp-validation-for="idProveedor" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="stock" class="control-label">Stock</label>
+                        <input asp-for="stock" class="form-control" />
+                        <span asp-validation-for="stock" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="precio" class="control-label">Precio</label>
+                        <input asp-for="precio" class="form-control" />
+                        <span asp-validation-for="precio" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="idCat" class="control-label">Categoria</label>
+                        @*<input asp-for="idCat" class="form-control" />*@
+                        <br />
+                        <select asp-for="idCat" asp-items="@ViewBag.CATEGORIA" class="form-control"></select>
+
+                        <span asp-validation-for="idCat" class="text-danger"></span>
+                    </div>
+
+
+                    <br />
+
+                    <div class="form-group text-center">
+                        <input type="submit" value="Registrar" class="btn btn-primary" />
+                        <a asp-action="Index" asp-controller="Producto" class="btn btn-outline-primary">Retornar a la lista</a>
+                    </div>
+                </form>
             </div>
-            <div class="form-group">
-                <label asp-for="idProveedor" class="control-label"></label>
-                @*<input asp-for="idProveedor" class="form-control" />*@
-                <br />
-                @Html.DropDownList("idProveedor", ViewBag.PROVEEDOR as SelectList, "Seleccione un proveedor")
-                <span asp-validation-for="idProveedor" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="stock" class="control-label"></label>
-                <input asp-for="stock" class="form-control" />
-                <span asp-validation-for="stock" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="precio" class="control-label"></label>
-                <input asp-for="precio" class="form-control" />
-                <span asp-validation-for="precio" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="idCat" class="control-label"></label>
-                @*<input asp-for="idCat" class="form-control" />*@
-                <br />
-                @Html.DropDownList("idCat", ViewBag.CATEGORIA as SelectList, "Seleccione una categoria")
-                <span asp-validation-for="idCat" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
+        </div>
     </div>
+
 </div>
 
-<div>
-    <a asp-action="Index">Volver</a>
+
+<br />
+
+<div class="alert alert-primary col-md-4 text-center" role="alert">
+    <div>@ViewBag.mensaje</div>
 </div>
+<br />
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

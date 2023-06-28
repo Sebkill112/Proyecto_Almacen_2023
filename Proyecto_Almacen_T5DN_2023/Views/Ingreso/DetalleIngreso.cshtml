@@ -4,20 +4,24 @@
     ViewData["Title"] = "DetalleIngreso";
 }
 
-<h1>Detalle del Ingreso</h1>
+<h1 class="text-center">DETALLE DEL INGRESO</h1>
 
 <p>
     <a asp-action="Portal" asp-controller="Ingreso" class="btn btn-primary">Seguir Agregando</a>
 </p>
 <hr />
-
+<div>
 <h3>Proveedor</h3>
 <select asp-items="@ViewBag.proveedor" class="form-control" id="cbo_proveedor"></select>
+</div>
+<br />
+<div>
 <h3>Fecha de Ingreso</h3>
 <input type="text" name="ven" class="form-control" value="@ViewBag.fecha" id="txtFecha" readonly />
-
-<table class="table" id="tbDetalle">
-    <thead>
+</div>
+<br />
+<table class="table table-hover" id="tbDetalle">
+    <thead class="table-dark">
         <tr>
             <th>
                 @Html.DisplayNameFor(model => model.idProducto)
@@ -65,7 +69,7 @@
                     <input type="button" value="Editar" class="btn btn-warning btn-editar" data-bs-toggle="modal" data-bs-target="#modalEditarCantidad"/>
                 </td>
             <td>
-                @Html.ActionLink("delete", "delete", new { id=item.idProducto  })
+                    <button class="btn btn-danger">@Html.ActionLink("Eliminar", "Delete", new {  id=item.idProducto }, new { style = "color: white;"  }) </button>
             </td>
         </tr>
 }
@@ -92,10 +96,26 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                ID Producto : <label id="lbId"></label><br />
-                Nombre : <label id="lbNombre"></label><br />
-                Precio :<input type="text" id="txtPrecioEditar" /><br />
-                Cantidad : <input type="text" id="txtCantidadEditar" /><br />
+                <div class="form-group has-feedback col-md-12 mb-3">
+                    <label for="exampleInputEmail1"><b> ID Producto: </b></label>
+                    <i class="fas fa-file-signature form-control-feedback2"></i>
+                    <label id="lbId"></label>
+                </div>
+                <div class="form-group has-feedback col-md-12 mb-3">
+                    <label for="exampleInputEmail1"><b> Nombre: </b></label>
+                    <i class="fas fa-file-signature form-control-feedback2"></i>
+                    <label id="lbNombre"></label>
+                </div>
+                <div class="form-group has-feedback col-md-12 mb-3">
+                    <label for="exampleInputEmail1"><b> Precio: </b></label>
+                    <i class="fas fa-file-signature form-control-feedback2"></i>
+                    <input type="text" id="txtPrecioEditar" class="form-control"/>
+                </div>
+                <div class="form-group has-feedback col-md-12 mb-3">
+                    <label for="exampleInputEmail1"><b> Cantidad: </b></label>
+                    <i class="fas fa-file-signature form-control-feedback2"></i>
+                    <input type="text" id="txtCantidadEditar" class="form-control" />
+                </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-primary" data-dismiss="modal" id="btnAceptarCantidad">Aceptar</button>
@@ -108,6 +128,7 @@
 
 @section Scripts
 		{
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         
             <script>
 
@@ -139,7 +160,7 @@
 
                     dato = JSON.stringify(Ingreso);
 
-                    console.log(dato);
+              
 
             jQuery.ajax({
                 url: '@Url.Action("GuardarIngreso", "Ingreso")',
@@ -149,8 +170,13 @@
                 success: function (data) {
                     
                     if(data.respuesta){
-                        alert("Ingreso Registrado")
-                        window.location.href = '@Url.Action("Portal", "Ingreso")'
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Ingreso Registrado',
+                            showConfirmButton: false,
+                            timer: 1500
+                        })
+                        $("#tbDetalle tbody").empty();
                     }
 
                 }
@@ -199,8 +225,10 @@
                 success: function (response) {
 
                     if (response.respuesta) {
-                    window.location.href = '@Url.Action("DetalleIngreso", "Ingreso")'
-                    alert("producto Editado");
+                        
+                        window.location.href = '@Url.Action("DetalleIngreso", "Ingreso")'
+                        alert("producto Editado");
+                       
                     }
                 
 
