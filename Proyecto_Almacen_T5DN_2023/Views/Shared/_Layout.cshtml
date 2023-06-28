@@ -9,12 +9,18 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/Proyecto_Almacen_T5DN_2023.styles.css" asp-append-version="true" />
+
+    <style>
+       
+        
+    </style>
 </head>
 <body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+    <header >
+        <nav  class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-dark border-bottom box-shadow mb-3">
             <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Proyecto_Almacen_T5DN_2023</a>
+                <img src="https://www.qousqazah.com/blog/wp-content/uploads/2018/01/features-of-a-business-logo.png" width="100" alt="mi foto" class="box-img">
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index"><h3 class="text-white">Sistema de almacen</h3></a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -24,46 +30,60 @@
 
                         @if (User.IsInRole("Administrador")) {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy"><h5>Privacy</h5></a>
                             </li>
                         }
                         @if (User.IsInRole("Administrador") || User.IsInRole("Proveedor")) { 
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Ingreso" asp-action="Portal">Ingreso</a>
+                                <a class="nav-link text-dark text-white" asp-area="" asp-controller="Ingreso" asp-action="Portal"><h5>Ingreso</h5></a>
                             </li>
                         }
                         @if (User.IsInRole("Administrador") || User.IsInRole("Asistente")) { 
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Egreso" asp-action="Portal">Egreso</a>
+                                <a class="nav-link text-dark text-white" asp-area="" asp-controller="Egreso" asp-action="Portal"><h5>Egreso</h5></a>
                         </li>
                         }
                         @if (User.IsInRole("Administrador") || User.IsInRole("Asistente"))
                         {
                             <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Producto" asp-action="Index">Productos</a>
+                                <a class="nav-link text-dark text-white" asp-area="" asp-controller="Producto" asp-action="Index"><h5>Productos</h5></a>
                         </li>
                         }
                         @if (User.IsInRole("Administrador") )
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Proveedor" asp-action="Index">Proveedores</a>
+                                <a class="nav-link text-dark text-white" asp-area="" asp-controller="Proveedor" asp-action="Index"><h5>Proveedores</h5></a>
                             </li>
                         }
                         @if (User.IsInRole("Administrador") || User.IsInRole("Asistente"))
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Cliente" asp-action="Index">Clientes</a>
+                                <a class="nav-link text-dark text-white" asp-area="" asp-controller="Cliente" asp-action="Index"><h5>Clientes</h5></a>
                             </li>
                           }
+                        @*div class="navbar-collapse collapse
                         @if (User.IsInRole("Administrador") || User.IsInRole("Proveedor") || User.IsInRole("Asistente")) {
 
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Usuario" asp-action="Salir">Cerrar Sesión</a>
+
+                                <button class="btn btn-danger"><a class="nav-link text-dark  float-right text-white" asp-area="" asp-controller="Usuario" asp-action="Salir"><h5>Cerrar Sesión</h5></a></button>
                             </li>
-                        }
+                        }*@
                         
                     </ul>
                 </div>
+                <div class="navbar-collapse collapse d-sm-inline-flex">
+                    <ul class="navbar-nav flex-grow-1">
+                @if (User.IsInRole("Administrador") || User.IsInRole("Proveedor") || User.IsInRole("Asistente"))
+                {
+
+                    <li class="nav-item">
+                      <button class="btn btn-danger float-right"><a class="nav-link text-dark  float-right text-white" asp-area="" asp-controller="Usuario" asp-action="Salir"><h5>Cerrar Sesión</h5></a></button>
+                    </li>
+                }
+
+                </ul>
+            </div>
             </div>
         </nav>
     </header>
@@ -74,8 +94,7 @@
     </div>
 
     <footer class="border-top footer  bg-dark text-center text-lg-start text-white">
-        <div class="container p-4">
-            &copy; 2023 - Proyecto_Almacen_T5DN_2023 - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        <div class="container"> &copy; 2023 - Proyecto_Almacen_T5DN_2023 - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>

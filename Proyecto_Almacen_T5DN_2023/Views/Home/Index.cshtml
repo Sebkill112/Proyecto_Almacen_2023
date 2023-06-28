@@ -3,7 +3,109 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Bienvenida al Almacen</h1>
+<style>
+    import url('https://fonts.googleapis.com/css2?family=Roboto:ital@0;1&display=swap');
+
+    * {
+        padding: 0;
+        margin: 0;
+        font-family: 'Roboto', sans-serif;
+    }
+
+    body {
+        background: url(https://img.freepik.com/vector-premium/vista-perspectiva-almacen-cajas-carton-bastidores-interior-sala-almacenamiento-fabrica_273525-1066.jpg?w=2000) no-repeat;
+        
+
+        background-size: cover;
+    }
+
+    .box {
+        width: 500px;
+        /*background: rgba(54, 58, 49, 0.5);*/
+        background: #222;
+        padding: 20px;
+        text-align: center;
+        margin: 40px auto;
+        color: white;
+        border-radius: 20px;
+    }
+
+    .box-img {
+        border-radius: 50px;
+    }
+
+    .box h1 {
+        font-size: 40px;
+        letter-spacing: 5px;
+        margin: 30px 0 20px;
+        font-weight: 900;
+    }
+
+    .box h2 {
+        font-size: 25px;
+        letter-spacing: 3px;
+        margin: 0 0 30px 0;
+        font-weight: 500;
+    }
+
+    .box p {
+        text-align: justify;
+    }
+
+    .box ul {
+        margin-top: 20px;
+        list-style: none;
+    }
+
+        .box ul li {
+            display: inline-block;
+        }
+
+            .box ul li a {
+                color: white;
+                font-size: 50px;
+                padding: 10px 10px;
+                transition: all .5s ease-in-out;
+                display: block;
+            }
+
+                .box ul li a:hover {
+                    color: darkorange;
+                    transform: scale(1.2);
+                }
+
+</style>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <script src="https://kit.fontawesome.com/74ed406b69.js" crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="style.css">
+
+    <title>Página Personal</title>
+</head>
+<body>
+    <section class="box">
+        <img src="https://www.qousqazah.com/blog/wp-content/uploads/2018/01/features-of-a-business-logo.png" width="180" alt="mi foto" class="box-img">
+        <h1>SISTEMA DE ALMACÉN</h1>
+@*        <h2>Somos los más grandes y seguros</h2>
+*@        <h3 class="text-center">¡Bienvenidos a nuestro sistema de amacén!</h3>
+        <p>
+            Estamos encantados de tenerlo aquí y brindarle todas las herramientas necesarias para administrar eficientemente sus productos y recursos. Nuestro sistema ha sido diseñado para facilitar la gestión de inventario, optimizar el espacio de almacenamiento y garantizar un flujo de trabajo fluido. No importa si eres un pequeño negocio o una gran empresa, estamos comprometidos en brindarle una experiencia segura y confiable.
+
+            ¡Gracias por elegir nuestro sistema de almacenamiento y esperamos que su experiencia sea productiva y exitosa!
+        </p>
+
+        <ul>
+            <li><a href="https://www.youtube.com/" target="_blank"><i class="fa-brands fa-youtube"></i></a></li>
+            <li><a href="https://www.facebook.com/" target="_blank"><i class="fa-brands fa-facebook"></i></a></li>
+            <li><a href="https://www.instagram.com/" target="_blank"><i class="fa-brands fa-instagram"></i></a></li>
+            <li><a href="https://pe.linkedin.com/" target="_blank"><i class="fa-brands fa-linkedin"></i></a></li>
+        </ul>
+    </section>
+</body>
 
 
 
