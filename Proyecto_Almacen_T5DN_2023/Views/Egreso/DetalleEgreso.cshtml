@@ -76,7 +76,7 @@
                     <input type="button" value="Editar" class="btn btn-warning btn-editar" data-bs-toggle="modal" data-bs-target="#modalEditarCantidad" />
                 </td>
                 <td>
-                    @Html.ActionLink("delete", "delete", new { id=item.idProducto  })
+                        <button class="btn btn-danger">@Html.ActionLink("Eliminar", "Delete", new {  id=item.idProducto }, new { style = "color: white;"  }) </button>
                 </td>
             </tr>
 }
@@ -105,10 +105,27 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                ID Producto : <label id="lbId"></label><br />
-                Nombre : <label id="lbNombre"></label><br />
-                Precio :<label id="lbPrecio"></label><br /><br />
-                Cantidad : <input type="text" id="txtCantidadEditar" /><br />
+                <div class="form-group has-feedback col-md-12 mb-3">
+                    <label for="exampleInputEmail1"><b> ID Producto: </b></label>
+                    <i class="fas fa-file-signature form-control-feedback2"></i>
+                    <label id="lbId"></label>
+                </div>
+                <div class="form-group has-feedback col-md-12 mb-3">
+                    <label for="exampleInputEmail1"><b> Nombre : </b></label>
+                    <i class="fas fa-file-signature form-control-feedback2"></i>
+                    <label id="lbNombre"></label>
+                </div>
+                <div class="form-group has-feedback col-md-12 mb-3">
+                    <label for="exampleInputEmail1"><b> Precio : </b></label>
+                    <i class="fas fa-file-signature form-control-feedback2"></i>
+                    <label id="lbPrecio"></label>
+                </div>
+                <div class="form-group has-feedback col-md-12 mb-3">
+                    <label for="exampleInputEmail1"><b> Cantidad : </b></label>
+                    <i class="fas fa-file-signature form-control-feedback2"></i>
+                    <input type="text" id="txtCantidadEditar" class="form-control"/>
+                </div>
+                 
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-primary" data-dismiss="modal" id="btnAceptarCantidad">Aceptar</button>
@@ -169,7 +186,7 @@
                             showConfirmButton: false,
                             timer: 1500
                         })
-                        window.location.href = '@Url.Action("Portal", "Egreso")'
+                        $("#tbDetalle tbody").empty();
                     }
 
                 }
