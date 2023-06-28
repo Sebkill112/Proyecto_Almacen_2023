@@ -18,6 +18,26 @@ namespace Proyecto_Almacen_T5DN_2023.Controllers
             _configuration = configuration;
         }
 
+
+        public string proveedorCorrelativo()
+        {
+            string codigo = string.Empty;
+            using (SqlConnection cn = new(_configuration["ConnectionStrings:cnDB"]))
+            {
+                SqlCommand cmd = new SqlCommand("sp_generar_numero", cn);
+                cn.Open();
+                SqlDataReader reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                   
+                        codigo = reader.GetString(0);
+                    
+                }
+                cn.Close();
+            }
+            return codigo;
+        }
+
         IEnumerable<ProveedorVista> listaProveedor()
         {
             List<ProveedorVista> lista = new List<ProveedorVista>();
@@ -82,7 +102,7 @@ namespace Proyecto_Almacen_T5DN_2023.Controllers
 
         public async Task<IActionResult> Create(int codDep = 0, int codPro = 0)
         {
-
+            ViewBag.codigo = proveedorCorrelativo();
             ViewBag.departamentos = new SelectList(await Task.Run(() => dao.ListarDepartamentos()), "CodigoDepartamento", "Nombre");
  
             return View(new Proveedor());

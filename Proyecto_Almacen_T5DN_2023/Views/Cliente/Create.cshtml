@@ -23,7 +23,7 @@
             <div class="form-group">
                 
                 <label asp-for="idCliente" class="control-label"></label>
-                <input asp-for="idCliente" class="form-control" />
+                        <input asp-for="idCliente" class="form-control" readonly value="@ViewBag.codigo" />
                 <span asp-validation-for="idCliente" class="text-danger"></span>
             </div>
             <div class="form-group">

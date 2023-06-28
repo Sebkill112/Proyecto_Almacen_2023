@@ -20,6 +20,25 @@ namespace Proyecto_Almacen_T5DN_2023.Controllers
             _configuration = configuration;
         }
 
+        public string ClienteCorrelativo()
+        {
+            string codigo = string.Empty;
+            using (SqlConnection cn = new(_configuration["ConnectionStrings:cnDB"]))
+            {
+                SqlCommand cmd = new SqlCommand("sp_generar_numeroCliente", cn);
+                cn.Open();
+                SqlDataReader reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+
+                    codigo = reader.GetString(0);
+
+                }
+                cn.Close();
+            }
+            return codigo;
+        }
+
         IEnumerable<ClienteVista> listaClientes()
         {
             List<ClienteVista> lista = new List<ClienteVista>();
@@ -81,7 +100,8 @@ namespace Proyecto_Almacen_T5DN_2023.Controllers
 
         public async Task<IActionResult> Create(int codDep = 0, int codPro = 0)
         {
-      
+
+            ViewBag.codigo = ClienteCorrelativo();
             ViewBag.departamentos = new SelectList(await Task.Run(() => dao.ListarDepartamentos()), "CodigoDepartamento", "Nombre");
             ViewBag.distritos = new SelectList(await Task.Run(() => dao.ListarDistritos(codDep)), "CodigoDistrito", "Nombre");
             ViewBag.provincias = new SelectList(await Task.Run(() => dao.ListarProvincias(codDep)), "CodigoProvincia", "Nombre");
