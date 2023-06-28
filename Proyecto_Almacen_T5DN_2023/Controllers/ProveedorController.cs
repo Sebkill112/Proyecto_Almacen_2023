@@ -234,7 +234,7 @@ namespace Proyecto_Almacen_T5DN_2023.Controllers
                     cn.Open();
                     int cantidad = cmd.ExecuteNonQuery();
                     cn.Close();
-                    mensaje = $"Se ha Eliminado {cantidad} Cliente";
+                    mensaje = $"Se ha Eliminado {cantidad} Proveedor";
 
                 }
                 catch (Exception ex)
