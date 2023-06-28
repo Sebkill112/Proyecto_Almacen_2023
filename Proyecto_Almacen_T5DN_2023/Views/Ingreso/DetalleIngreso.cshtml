@@ -4,20 +4,24 @@
     ViewData["Title"] = "DetalleIngreso";
 }
 
-<h1>Detalle del Ingreso</h1>
+<h1 class="text-center">DETALLE DEL INGRESO</h1>
 
 <p>
     <a asp-action="Portal" asp-controller="Ingreso" class="btn btn-primary">Seguir Agregando</a>
 </p>
 <hr />
-
+<div>
 <h3>Proveedor</h3>
 <select asp-items="@ViewBag.proveedor" class="form-control" id="cbo_proveedor"></select>
+</div>
+<br />
+<div>
 <h3>Fecha de Ingreso</h3>
 <input type="text" name="ven" class="form-control" value="@ViewBag.fecha" id="txtFecha" readonly />
-
-<table class="table" id="tbDetalle">
-    <thead>
+</div>
+<br />
+<table class="table table-hover" id="tbDetalle">
+    <thead class="table-dark">
         <tr>
             <th>
                 @Html.DisplayNameFor(model => model.idProducto)
@@ -108,6 +112,7 @@
 
 @section Scripts
 		{
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         
             <script>
 
@@ -139,7 +144,7 @@
 
                     dato = JSON.stringify(Ingreso);
 
-                    console.log(dato);
+              
 
             jQuery.ajax({
                 url: '@Url.Action("GuardarIngreso", "Ingreso")',
@@ -149,7 +154,12 @@
                 success: function (data) {
                     
                     if(data.respuesta){
-                        alert("Ingreso Registrado")
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Ingreso Registrado',
+                            showConfirmButton: false,
+                            timer: 1500
+                        })
                         window.location.href = '@Url.Action("Portal", "Ingreso")'
                     }
 
@@ -199,8 +209,9 @@
                 success: function (response) {
 
                     if (response.respuesta) {
-                    window.location.href = '@Url.Action("DetalleIngreso", "Ingreso")'
-                    alert("producto Editado");
+
+                        window.location.href = '@Url.Action("DetalleIngreso", "Ingreso")'
+                        alert("Producto editado")
                     }
                 
 

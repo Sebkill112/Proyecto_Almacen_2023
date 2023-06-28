@@ -8,10 +8,12 @@
 <link rel="stylesheet"
       href="https://use.fontawesome.com/releases/v5.0.8/css/solid.css">
 <script src="https://use.fontawesome.com/releases/v5.0.7/js/all.js"></script>
-<h1>Seleccione Los Productos para Ingresar</h1>
-
-<table class="table" id="tableProductos">
-    <thead>
+<h1 class="text-center">INGRESO DE PRODUCTOS</h1>
+<br />
+<h2>Seleccione los Productos para ingresar</h2>
+<br />
+<table class="table table-hover" id="tableProductos">
+    <thead class="table-dark">
         <tr>
             <th>
                 Codigo
@@ -73,6 +75,7 @@
 		<!-- JS para la tabla -->
 		<script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
 		<script src="https://cdn.datatables.net/1.12.1/js/dataTables.bootstrap5.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 		
         <script>
         $("#tableProductos").DataTable();
@@ -95,10 +98,20 @@
                         type: "post",
                         success: function (response) {
                             console.log(response)
-                            alert("Producto Agregado")
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Producto Agregado',
+                                showConfirmButton: false,
+                                timer: 1500
+                            })
                         },
                         error: function (err, error) {
-                            alert(error);
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Error',
+                                showConfirmButton: false,
+                                timer: 1500
+                            })
                         }
 
                     })

@@ -4,21 +4,30 @@
     ViewData["Title"] = "DetalleEgreso";
 }
 
-<h1>DetalleEgreso</h1>
+<h1 class="text-center">DETALLE DEL EGRESO</h1>
 
 <p>
     <a asp-action="Portal" asp-controller="Egreso" class="btn btn-primary">Seguir Agregando</a>
 </p>
 <hr />
-
+<div>
 <h3>Cliente</h3>
 <select asp-items="@ViewBag.cliente" class="form-control" id="cbo_cliente"></select>
+</div>
+<br />
+<div>
 <h3>Fecha de Ingreso</h3>
 <input type="text" name="ven" class="form-control" value="@ViewBag.fecha" id="txtFecha" readonly />
+</div>
+<br />
+<div>
 <h3>Destino</h3>
 <input type="text" name="ven" class="form-control" id="txtDestino" />
-<table class="table" id="tbDetalle">
-    <thead>
+    </div>
+<br />
+<div class="align-content-center">
+<table class="table table-hover" id="tbDetalle">
+    <thead class="table-dark">
         <tr>
             <th>
                 @Html.DisplayNameFor(model => model.idProducto)
@@ -81,7 +90,7 @@
         </tr>
     </tfoot>
 </table>
-
+</div>
 <hr />
 <br />
 <div>
@@ -111,6 +120,7 @@
 
 @section Scripts
     {
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <script>
 
@@ -143,7 +153,7 @@
 
             dato = JSON.stringify(Egreso);
 
-            console.log(dato);
+          
 
             jQuery.ajax({
                 url: '@Url.Action("GuardarEgreso", "Egreso")',
@@ -153,7 +163,12 @@
                 success: function (data) {
 
                     if (data.respuesta) {
-                        alert("Egreso Registrado")
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Egreso Registrado',
+                            showConfirmButton: false,
+                            timer: 1500
+                        })
                         window.location.href = '@Url.Action("Portal", "Egreso")'
                     }
 

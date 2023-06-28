@@ -70,6 +70,10 @@ namespace Proyecto_Almacen_T5DN_2023.Controllers
             return list;
         }
         //
+        public int indice ()
+        {
+            return listProduct().Count() + 1;
+        }
         public async Task<IActionResult> Index()
         { 
             return View(await Task.Run(()=> listProduct()));
@@ -77,6 +81,7 @@ namespace Proyecto_Almacen_T5DN_2023.Controllers
         // Create 
         public async Task<IActionResult> Registrar()
         {
+            ViewBag.INDICE = indice();
             ViewBag.CATEGORIA = new SelectList(await Task.Run(() => dao.ListCategory()), "idCat", "nomCat");
             ViewBag.PROVEEDOR = new SelectList(await Task.Run(() => dao.ListProveedor()), "idProveedor", "nombreProveedor");
             return View(new Producto());
