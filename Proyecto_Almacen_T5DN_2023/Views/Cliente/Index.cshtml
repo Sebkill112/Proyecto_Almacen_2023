@@ -13,7 +13,7 @@
    
 </style>
 
-<h1>CLIENTES</h1>
+<h1 class="text-center">LISTADO DE CLIENTES</h1>
 
 <p>
     <a asp-action="Create" asp-controller="Cliente" class="btn btn-success">Nuevo Cliente</a>
@@ -76,8 +76,8 @@
                 @Html.DisplayFor(modelItem => item.idDepartamento)
             </td>
             <td>
-                    <button class="btn btn-warning">   @Html.ActionLink("Editar", "Edit", new { id=item.idCliente }, new { style = "color: white;"  }) </button>
-                    <button class="btn btn-primary">@Html.ActionLink("Detalles", "Details", new { /* id=item.PrimaryKey */ }, new { style = "color: white;"  }) </button>
+                    <button class="btn btn-warning">@Html.ActionLink("Editar", "Edit", new { id=item.idCliente }, new { style = "color: white;"  }) </button>
+    
                     <button class="btn btn-danger">@Html.ActionLink("Eliminar", "Delete", new {  id=item.idCliente }, new { style = "color: white;"  }) </button>
             </td>
         </tr>

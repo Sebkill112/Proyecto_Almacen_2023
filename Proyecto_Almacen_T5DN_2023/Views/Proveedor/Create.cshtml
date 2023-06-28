@@ -4,74 +4,80 @@
     ViewData["Title"] = "Create";
 }
 
-<h1>Create</h1>
 
-<h4>Proveedor</h4>
-<hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="idProveedor" class="control-label"></label>
-                <input asp-for="idProveedor" class="form-control" />
-                <span asp-validation-for="idProveedor" class="text-danger"></span>
+        <div class="card">
+            <div class="card-header bg-primary text-white text-center">
+                <h3>Registro Proveedor</h3>
             </div>
-            <div class="form-group">
-                <label asp-for="RUC" class="control-label"></label>
-                <input asp-for="RUC" class="form-control" />
-                <span asp-validation-for="RUC" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="nombreProveedor" class="control-label"></label>
-                <input asp-for="nombreProveedor" class="form-control" />
-                <span asp-validation-for="nombreProveedor" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="direccion" class="control-label"></label>
-                <input asp-for="direccion" class="form-control" />
-                <span asp-validation-for="direccion" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="telefono" class="control-label"></label>
-                <input asp-for="telefono" class="form-control" />
-                <span asp-validation-for="telefono" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="correo" class="control-label"></label>
-                <input asp-for="correo" class="form-control" />
-                <span asp-validation-for="correo" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="idDepartamento" class="control-label"></label>
-                @*<input asp-for="idDepartamento" class="form-control" />*@
-                <select asp-for="idDepartamento" asp-items="@ViewBag.departamentos" class="form-control" id="depa"></select>
-                <span asp-validation-for="idDepartamento" class="text-danger"></span>
-            </div>
+            <div class="card-body bg-light">
+                @*<h5 class="card-title"> Crear un Nuevo Cliente</h5>*@
+                <form asp-action="Create">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group">
+                        <label asp-for="idProveedor" class="control-label"></label>
+                        <input asp-for="idProveedor" class="form-control" />
+                        <span asp-validation-for="idProveedor" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="RUC" class="control-label"></label>
+                        <input asp-for="RUC" class="form-control" />
+                        <span asp-validation-for="RUC" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="nombreProveedor" class="control-label"></label>
+                        <input asp-for="nombreProveedor" class="form-control" />
+                        <span asp-validation-for="nombreProveedor" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="direccion" class="control-label"></label>
+                        <input asp-for="direccion" class="form-control" />
+                        <span asp-validation-for="direccion" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="telefono" class="control-label"></label>
+                        <input asp-for="telefono" class="form-control" />
+                        <span asp-validation-for="telefono" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="correo" class="control-label"></label>
+                        <input asp-for="correo" class="form-control" />
+                        <span asp-validation-for="correo" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="idDepartamento" class="control-label"></label>
+                        @*<input asp-for="idDepartamento" class="form-control" />*@
+                        <select asp-for="idDepartamento" asp-items="@ViewBag.departamentos" class="form-control" id="depa"></select>
+                        <span asp-validation-for="idDepartamento" class="text-danger"></span>
+                    </div>
 
-            <div class="form-group">
-                <label asp-for="idProvincia" class="control-label"></label>
-                @*<input asp-for="idProvincia" class="form-control" />*@
-                <select asp-for="idProvincia" class="form-control" id="prov"></select>
-                <span asp-validation-for="idProvincia" class="text-danger"></span>
-            </div>
+                    <div class="form-group">
+                        <label asp-for="idProvincia" class="control-label"></label>
+                        @*<input asp-for="idProvincia" class="form-control" />*@
+                        <select asp-for="idProvincia" class="form-control" id="prov"></select>
+                        <span asp-validation-for="idProvincia" class="text-danger"></span>
+                    </div>
 
-            <div class="form-group">
-                <label asp-for="idDistrito" class="control-label"></label>
-                @*<input asp-for="idDistrito" class="form-control" />*@
-                <select asp-for="idDistrito" class="form-control" id="dist"></select>
-                <span asp-validation-for="idDistrito" class="text-danger"></span>
+                    <div class="form-group">
+                        <label asp-for="idDistrito" class="control-label"></label>
+                        @*<input asp-for="idDistrito" class="form-control" />*@
+                        <select asp-for="idDistrito" class="form-control" id="dist"></select>
+                        <span asp-validation-for="idDistrito" class="text-danger"></span>
+                    </div>
+
+                    <br />
+                    <div class="form-group text-center">
+                        <input type="submit" value="GRABAR" class="btn btn-primary" />
+                        <a asp-action="Index" asp-controller="Proveedor" class="btn btn-outline-primary">Retornar a la lista</a>
+                    </div>
+                </form>
             </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
+        </div>
     </div>
-</div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
 </div>
+<br />
 
 <div class="alert alert-primary col-md-4 text-center" role="alert">
     <div>@ViewBag.mensaje</div>

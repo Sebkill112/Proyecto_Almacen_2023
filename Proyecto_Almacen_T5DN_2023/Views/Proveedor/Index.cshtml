@@ -4,41 +4,41 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>PROVEEDORES</h1>
+<h1 class="text-center"> LISTA DE PROVEEDORES</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create" class="btn btn-success">Nuevo Proveedor</a>
 </p>
-<table class="table">
-    <thead>
+<table class="table table-hover">
+    <thead class="table-dark">
         <tr>
-            <th>
+            <th scope="col">
                 @Html.DisplayNameFor(model => model.idProveedor)
             </th>
-            <th>
+            <th scope="col">
                 @Html.DisplayNameFor(model => model.RUC)
             </th>
-            <th>
+            <th scope="col">
                 @Html.DisplayNameFor(model => model.nombreProveedor)
             </th>
-            <th>
+            <th scope="col">
                 @Html.DisplayNameFor(model => model.direccion)
             </th>
-            <th>
+            <th scope="col">
                 @Html.DisplayNameFor(model => model.idDistrito)
             </th>
-            <th>
+            <th scope="col">
                 @Html.DisplayNameFor(model => model.telefono)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.idProvincia)
             </th>
-            <th>
+            <th scope="col">
                 @Html.DisplayNameFor(model => model.correo)
             </th>
-            <th>
+            <th scope ="col">
                 @Html.DisplayNameFor(model => model.idDepartamento)
-            </th>
+            </ths>
             <th></th>
         </tr>
     </thead>
@@ -73,9 +73,8 @@
                 @Html.DisplayFor(modelItem => item.idDepartamento)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { id=item.idProveedor }) 
-                    @Html.ActionLink("Delete", "Delete", new { id=item.idProveedor })
-            </td>
+                    <button class="btn btn-warning">   @Html.ActionLink("Editar", "Edit", new { id=item.idProveedor }, new { style = "color: white;"  }) </button>
+                    <button class="btn btn-danger">@Html.ActionLink("Eliminar", "Delete", new {  id=item.idProveedor }, new { style = "color: white;"  }) </button>
         </tr>
 }
     </tbody>
